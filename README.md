@@ -6,31 +6,90 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-_description_
+A rollup plugin to delete code by Comments
 
-> **Note**:
-> Replace `rollup-plugin-code-deleter`, `_description_` and `antfu` globally to use this template.
+```js
+// input
+const obj = {
+  /* code-deleter */
+  a: 1,
+  b: 2
+}
 
-## Sponsors
+// output
+const obj = {
+  b: 2
+}
+```
 
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
-  </a>
-</p>
+## Start
+### In Rollup
+```js
+import codeDeleter from 'rollup-plugin-code-deleter'
+
+export default {
+  input: 'src/index.js',
+  output: {
+    file: 'dist/app.js',
+    format: 'umd',
+    name: 'app'
+  },
+  plugins: [
+    codeDeleter()
+  ]
+}
+```
+
+### In Vite
+```js
+import { defineConfig } from 'vite'
+import codeDeleter from 'rollup-plugin-code-deleter'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [CodeDeleter()],
+})
+```
+
+### In Code
+you can comment the code where you want to delete
+```js
+const obj = {
+  /** code-deleter */
+  a: 1 // the property will be deleted
+}
+```
+
+also you can specify which piece of code is deleted
+```js
+const obj = {
+  /** code-deleter: pc */
+  a: 1,
+  /** code-deleter: mobile */
+  b: 2
+}
+```
+
+with config:
+```js
+import codeDeleter from 'rollup-plugin-code-deleter'
+export default {
+  plugins: [
+    codeDeleter({
+      delete: ['pc']
+    })
+  ]
+}
+```
+
+the code will output
+```js
+const obj = {
+  /** code-deleter: mobile */
+  b: 2
+}
+```
 
 ## License
 
-[MIT](./LICENSE) License © 2023-PRESENT [Anthony Fu](https://github.com/antfu)
-
-<!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/rollup-plugin-code-deleter?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmjs.com/package/rollup-plugin-code-deleter
-[npm-downloads-src]: https://img.shields.io/npm/dm/rollup-plugin-code-deleter?style=flat&colorA=080f12&colorB=1fa669
-[npm-downloads-href]: https://npmjs.com/package/rollup-plugin-code-deleter
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/rollup-plugin-code-deleter?style=flat&colorA=080f12&colorB=1fa669&label=minzip
-[bundle-href]: https://bundlephobia.com/result?p=rollup-plugin-code-deleter
-[license-src]: https://img.shields.io/github/license/antfu/rollup-plugin-code-deleter.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/antfu/rollup-plugin-code-deleter/blob/main/LICENSE
-[jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
-[jsdocs-href]: https://www.jsdocs.io/package/rollup-plugin-code-deleter
+[MIT](./LICENSE) License © 2023-PRESENT [ShunJun]<https://github.com/shunjun>
