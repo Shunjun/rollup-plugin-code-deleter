@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Shunjun/rollup-plugin-code-deleter.git"
   },
   "bugs": "https://github.com/Shunjun/rollup-plugin-code-deleter/issues",
-  "keywords": [],
+  "keywords": ["rollup", "rollup-plugin", "code-deleter", "delete-code", "rollup-plugin-code-deleter"],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -39,7 +39,6 @@
     "build": "unbuild",
     "dev": "unbuild --stub",
     "lint": "eslint .",
-    "prepublishOnly": "nr build",
     "release": "bumpp && npm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
