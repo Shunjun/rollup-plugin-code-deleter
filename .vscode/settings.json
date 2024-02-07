@@ -40,5 +40,6 @@
   ],
   "cSpell.words": [
     "deleter"
-  ]
+  ],
+  "testing.automaticallyOpenPeekView": "never"
 }

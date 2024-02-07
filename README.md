@@ -6,7 +6,7 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-A rollup plugin to delete code by Comments
+A rollup plugin to delete code by Comments **WIP**
 
 ```js
 // input
