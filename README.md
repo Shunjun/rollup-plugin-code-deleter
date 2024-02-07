@@ -1,7 +1,7 @@
 # rollup-plugin-code-deleter
 
-[![npm version][npm-version-src]][npm-version-href]
-[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![NPM Version][npm-version-src]][npm-version-href]
+[![NPM Downloads][npm-downloads-src]][npm-downloads-href]
 [![bundle][bundle-src]][bundle-href]
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
@@ -92,4 +92,16 @@ const obj = {
 
 ## License
 
-[MIT](./LICENSE) License © 2023-PRESENT [ShunJun]<https://github.com/shunjun>
+[MIT](./LICENSE) License © 2023-PRESENT [ShunJun](https://github.com/shunjun)
+
+<!-- Badges -->
+[npm-version-src]: https://img.shields.io/npm/v/rollup-plugin-code-deleter?style=flat&color=green
+[npm-version-href]: https://npmjs.com/package/rollup-plugin-code-deleter
+[npm-downloads-src]: https://img.shields.io/npm/dw/rollup-plugin-code-deleter
+[npm-downloads-href]: https://npmjs.com/package/rollup-plugin-code-deleter
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/rollup-plugin-code-deleter
+[bundle-href]: https://bundlephobia.com/result?p=rollup-plugin-code-deleter
+[license-src]: https://img.shields.io/github/license/shunjun/rollup-plugin-code-deleter
+[license-href]: https://github.com/Shunjun/rollup-plugin-code-deleter/blob/main/LICENSE
+[jsdocs-src]: https://img.shields.io/badge/jsDocs.io-reference-blue
+[jsdocs-href]: https://www.jsdocs.io/package/rollup-plugin-code-deleter
