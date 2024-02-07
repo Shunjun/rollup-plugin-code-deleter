@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest'
 import { transform } from '@babel/core'
 
 import { deleteCode } from '../src/deleteCode'
+import type { Config } from '../src/types'
 
 describe('delete test', () => {
   it('objectProperty', () => {
@@ -19,13 +20,10 @@ describe('delete test', () => {
       render: () => {}
     }`
 
-    try {
-      const code = deleteCode(testCode)
-      const transformCode = transform(resultCode)?.code
+    const code = deleteCode(testCode)
+    const transformCode = transform(resultCode)?.code
 
-      expect(code).toEqual(transformCode)
-    }
-    catch (error) {}
+    expect(code).toEqual(transformCode)
   })
 
   it('variableDeclaration', () => {
@@ -35,12 +33,38 @@ describe('delete test', () => {
     const bb = 2`
     const resultCode = `const bb = 2`
 
-    try {
-      const code = deleteCode(testCode)
-      const transformCode = transform(resultCode)?.code
+    const code = deleteCode(testCode)
+    const transformCode = transform(resultCode)?.code
 
-      expect(code).toEqual(transformCode)
+    expect(code).toEqual(transformCode)
+  })
+})
+
+describe('config test', () => {
+  it('delete', () => {
+    const testCode = `const aa = {
+      /* code-deleter: pc */
+      a: "123",
+      /* code-deleter: mobile */
+      fn: () => {},
+      /* code-deleter */
+      obj: {
+        c: 1
+      },
+      reg: /123/
+    }`
+    const resultCode = `const aa = {
+      /* code-deleter: mobile */
+      fn: () => {},
+      reg: /123/
+    }`
+    const config: Config = {
+      delete: ['pc'],
     }
-    catch (error) {}
+
+    const code = deleteCode(testCode, config)
+    const transformCode = transform(resultCode)?.code
+
+    expect(code).toEqual(transformCode)
   })
 })

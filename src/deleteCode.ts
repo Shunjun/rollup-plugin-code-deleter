@@ -46,16 +46,25 @@ function checkComments(
     }
   })
 
-  deleteIndex.reverse().forEach(index => comments.splice(index, 1))
-  // delete all
-  if (!deleteConfig.length)
-    return !!deleteIds.length
-  // test deleteId with miniMatch
-  return deleteIds.some((id) => {
-    if (id === 'all')
-      return true
-    return deleteConfig.some(pattern => minimatch(id, pattern))
-  })
+  let shouldDelete = false
+
+  if (!deleteConfig.length) {
+    // delete all
+    shouldDelete = !!deleteIds.length
+  }
+  else {
+    // test deleteId with miniMatch
+    shouldDelete = deleteIds.some((id) => {
+      if (id === 'all')
+        return true
+      return deleteConfig.some(pattern => minimatch(id, pattern))
+    })
+  }
+
+  if (shouldDelete)
+    deleteIndex.reverse().forEach(index => comments.splice(index, 1))
+
+  return shouldDelete
 }
 
 function getIds(value: string) {
