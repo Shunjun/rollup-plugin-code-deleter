@@ -2,6 +2,7 @@ import type { Plugin } from 'rollup'
 import { minimatch } from 'minimatch'
 import { deleteCode } from './deleteCode'
 import type { Config } from './types'
+import { toArray } from './utils'
 
 function codeDeleter(config: Config): Plugin {
   return {
@@ -11,22 +12,15 @@ function codeDeleter(config: Config): Plugin {
       handler(code, id) {
         const { ignorePath = [] } = config
 
-        if (toArray(ignorePath).some(pattern => minimatch(id, pattern)))
-          return code
+        const isIgnorePath = toArray(ignorePath).some(pattern => minimatch(id, pattern))
 
-        if (!/\.(t|j)sx?/.test(id))
+        if (!/\.(t|j)sx?/.test(id) || !/code-deleter/.test(code) || isIgnorePath)
           return code
 
         return deleteCode(code, config)
       },
     },
   }
-}
-
-function toArray<T>(some: T | T[]): T[] {
-  if (Array.isArray(some))
-    return some
-  return [some]
 }
 
 export default codeDeleter
