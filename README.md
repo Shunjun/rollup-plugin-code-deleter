@@ -8,21 +8,46 @@
 
 A rollup plugin to delete code by Comments **WIP**
 
+### Why
+Maybe you have a common package that is used by multiple packages，like this:
 ```js
-// input
-const obj = {
-  /* code-deleter */
-  a: 1,
-  b: 2
+// package A
+function renderForPackageB() {
+  // ...more codes
+}
+function renderForPackageC() {
+  // ...more codes
 }
 
-// output
-const obj = {
-  b: 2
+export const obj = {
+  renderForPackageB,
+  renderForPackageC,
+  ...someOtherProperties
 }
 ```
 
-## Start
+```js
+// package B
+import { obj } from 'A'
+obj.renderForPackageB()
+```
+
+```js
+// package C
+import { obj } from 'A'
+obj.renderForPackageC()
+```
+If you only build package B, the renderForPackageC will also be in your bundle.
+The tree-shaking will not work, all codes used in renderForPackageC will bu in bundle.
+
+If you know renderForPackageC does't need in your bundle. you can delete it from obj, to help you shrink the size of your bundle.
+
+## Install
+```sheel
+npm install rollup-plugin-code-deleter --save-dev
+```
+
+## Usage
 ### In Rollup
 ```js
 import codeDeleter from 'rollup-plugin-code-deleter'

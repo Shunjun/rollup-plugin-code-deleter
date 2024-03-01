@@ -11,13 +11,12 @@ function codeDeleter(config: Config): Plugin {
       order: 'pre',
       handler(code, id) {
         const { ignorePath = [] } = config
-
         const isIgnorePath = toArray(ignorePath).some(pattern => minimatch(id, pattern))
 
         if (!/\.(t|j)sx?/.test(id) || !/code-deleter/.test(code) || isIgnorePath)
           return code
 
-        return deleteCode(code, config)
+        return deleteCode(code, id, config)
       },
     },
   }

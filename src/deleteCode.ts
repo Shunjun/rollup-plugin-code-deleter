@@ -1,17 +1,24 @@
-import { parseSync, transformFromAstSync } from '@babel/core'
-import type { NodePath } from '@babel/traverse'
-import traverse from '@babel/traverse'
+import type { NodePath } from '@babel/core'
+import { parseSync, transformFromAstSync, traverse } from '@babel/core'
+
 import type { Comment } from '@babel/types'
 import { minimatch } from 'minimatch'
 import type { Config } from './types'
+import { debugFactory } from './debug'
 
-export function deleteCode(code: string, config?: Config) {
+const debug = debugFactory('deleteCode')
+
+export function deleteCode(code: string, id: string, config?: Config) {
+  debug('deleting module: %s', id)
   try {
     const ast = parseSync(code, { ...config?.babelOptions, babelrc: false })
     if (!ast)
       return code
 
     const removePath: NodePath[] = []
+    if (removePath.length)
+      debug('find %O remove codes', removePath.length)
+
     traverse(ast, {
       enter(path) {
         const leadingComments = path.node.leadingComments || []
@@ -27,6 +34,7 @@ export function deleteCode(code: string, config?: Config) {
     return result?.code || code
   }
   catch (error) {
+    debug('deleteCode error: %O', error)
     return code
   }
 }
